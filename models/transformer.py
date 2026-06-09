@@ -96,6 +96,6 @@ class Transformer(nn.Module):
         self.ffn = FeedForward(in_channels, ffn_multiplier)
     
     def forward(self, x, attn_mask, attn_temp, freqs_cis, which_cache='cond'):
-        x = self.attention(x, attn_mask, attn_temp, freqs_cis, which_cache)
-        x = self.ffn(x)
+        x = x + self.attention(x, attn_mask, attn_temp, freqs_cis, which_cache)
+        x = x + self.ffn(x)
         return x

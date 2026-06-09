@@ -17,7 +17,6 @@ from data.dataset import get_data, get_fid_stats_dir
 RANDOM_SEED = 46
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     
