@@ -1,0 +1,60 @@
+===================================
+Tue Jun  2 21:10:51 UTC 2026
+Job running on node: brev-leicy8mma
+===================================
+[DEBUG] Python check:
+Python 3.13.12
+[DEBUG] PYTHONPATH: :/data/jgu/hozy/min_tarflow
+===================================
+train.py starts at Tue Jun  2 21:10:51 UTC 2026
+===================================
+Wandb Settings
+===================================
+------------------------------------ Config ------------------------------------
+attn_head_dim                   : 64
+batch_size                      : 128
+cfg_weight                      : 0.0
+channel_size                    : 3
+class_dropout_prob              : 0.0
+compile                         : False
+dataset_name                    : imagenet64
+epochs                          : 100
+ffn_multiplier                  : 4
+flow_block_dim                  : 1024
+generative_model_path           : weights/
+img_size                        : 64
+lr                              : 0.0001
+lr_schedule_type                : wsd
+num_attn_layers                 : 8
+num_flow_blocks                 : 8
+num_samples                     : 10
+output_dir                      : results/
+patch_size                      : 4
+perumtation_type                : flip
+resume_wandb_url                : false
+sample_batch_size               : 10
+sample_freq                     : 10
+Number of parameters: 816652672, 816.652672M
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from WANDB_API_KEY.
+wandb: Currently logged in as: danielisdan (hozy-university-of-pennsylvania) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run gej25zh7
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in /data/jgu/hozy/min_tarflow/wandb_logs/wandb/run-20260602_211102-gej25zh7
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run train
+wandb: ⭐️ View project at https://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size
+wandb: 🚀 View run at https://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size/runs/gej25zh7
+Traceback (most recent call last):
+  File "/data/jgu/hozy/min_tarflow/train.py", line 182, in <module>
+    utils.prepare_fid_stats(ds_train, args.dataset_name, args.img_size, args.batch_size)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/jgu/hozy/min_tarflow/utils.py", line 121, in prepare_fid_stats
+    assert not fid_stats_file.exists()
+               ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'exists'
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mtrain[0m at: [34mhttps://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size/runs/gej25zh7[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb_logs/wandb/run-20260602_211102-gej25zh7/logs[0m
+-----------------------------------
+===================================
+Fin at Tue Jun  2 21:11:05 UTC 2026

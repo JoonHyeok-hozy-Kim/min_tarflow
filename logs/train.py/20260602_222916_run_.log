@@ -1,0 +1,83 @@
+===================================
+Tue Jun  2 22:29:16 UTC 2026
+Job running on node: brev-leicy8mma
+===================================
+[DEBUG] Python check:
+Python 3.13.12
+[DEBUG] PYTHONPATH: :/data/jgu/hozy/min_tarflow
+===================================
+train.py starts at Tue Jun  2 22:29:16 UTC 2026
+===================================
+Wandb Settings
+===================================
+------------------------------------ Config ------------------------------------
+attn_head_dim                   : 64
+batch_size                      : 128
+cfg_weight                      : 0.0
+channel_size                    : 3
+class_dropout_prob              : 0.0
+compile                         : False
+dataset_name                    : imagenet64
+epochs                          : 100
+ffn_multiplier                  : 4
+flow_block_dim                  : 1024
+generative_model_path           : weights/
+img_size                        : 64
+lr                              : 0.0001
+lr_schedule_type                : wsd
+num_attn_layers                 : 8
+num_flow_blocks                 : 8
+num_samples                     : 10
+output_dir                      : results/
+patch_size                      : 4
+perumtation_type                : flip
+resume_wandb_url                : false
+sample_batch_size               : 10
+sample_freq                     : 10
+Number of parameters: 816652672, 816.652672M
+Initiate wandb with new run_id : 43yzdczk
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from WANDB_API_KEY.
+wandb: Currently logged in as: danielisdan (hozy-university-of-pennsylvania) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.27.0
+wandb: Run data is saved locally in /data/jgu/hozy/min_tarflow/wandb_logs/wandb/run-20260602_222926-43yzdczk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run train
+wandb: ⭐️ View project at https://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size
+wandb: 🚀 View run at https://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size/runs/43yzdczk
+Saved FID stats file : weights/train_weights_wip/train/imagenet64/43yzdczk/lr_schedule_type_wsd/imagenet64_64_fid_stats.pth
+[torch.compile] : fin.
+  0%|          | 0/100 [00:00<?, ?it/s]  0%|          | 0/100 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/data/jgu/hozy/min_tarflow/train.py", line 211, in <module>
+    loss, (z, outputs, log_dets) = compute_loss(x, y, device, model)
+                                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/data/jgu/hozy/min_tarflow/train.py", line 187, in compute_loss
+    z, outputs, log_dets = model(x, y)
+                           ~~~~~^^^^^^
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/jgu/hozy/min_tarflow/models/tarflow.py", line 208, in forward
+    x, curr_log_det = flow_block(x, y)
+                      ~~~~~~~~~~^^^^^^
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/jgu/hozy/min_tarflow/models/tarflow.py", line 73, in forward
+    permuted_pos_embed = self.permutation(self.pos_embed, dim=0)    # (seq_len', flow_block_dim)
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/data/jgu/hozy/min_tarflow/venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+TypeError: PermutationIdentity.forward() got an unexpected keyword argument 'dim'
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mtrain[0m at: [34mhttps://wandb.ai/hozy-university-of-pennsylvania/TARFlow-train-imagenet64-img_size/runs/43yzdczk[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb_logs/wandb/run-20260602_222926-43yzdczk/logs[0m
+-----------------------------------
+===================================
+Fin at Tue Jun  2 22:39:09 UTC 2026

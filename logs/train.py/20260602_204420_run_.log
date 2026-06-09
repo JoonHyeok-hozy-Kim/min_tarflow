@@ -1,0 +1,51 @@
+===================================
+Tue Jun  2 20:44:20 UTC 2026
+Job running on node: brev-leicy8mma
+===================================
+[DEBUG] Python check:
+Python 3.13.12
+[DEBUG] PYTHONPATH: :/data/jgu/hozy/min_tarflow
+===================================
+train.py starts at Tue Jun  2 20:44:20 UTC 2026
+===================================
+Wandb Settings
+===================================
+usage: train.py [-h] [--generative_model_path GENERATIVE_MODEL_PATH]
+                [--output_dir OUTPUT_DIR] [--dataset_name {imagenet64}]
+                [--img_size IMG_SIZE] [--channel_size CHANNEL_SIZE]
+                [--patch_size PATCH_SIZE] [--num_flow_blocks NUM_FLOW_BLOCKS]
+                [--flow_block_dim FLOW_BLOCK_DIM]
+                [--num_attn_layers NUM_ATTN_LAYERS]
+                [--perumtation_type {flip,shuffle}]
+                [--attn_head_dim ATTN_HEAD_DIM]
+                [--ffn_multiplier FFN_MULTIPLIER] [--cfg_weight CFG_WEIGHT]
+                [--batch_size BATCH_SIZE] [--epochs EPOCHS] [--lr LR]
+                [--lr_schedule_type {wsd,wd,d,cos}]
+                [--class_dropout_prob CLASS_DROPOUT_PROB]
+                [--sample_freq SAMPLE_FREQ] [--num_samples NUM_SAMPLES]
+                [--sample_batch_size SAMPLE_BATCH_SIZE]
+                [--resume_wandb_url RESUME_WANDB_URL]
+                [--compile | --no-compile]
+train.py: error: unrecognized arguments:  
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 84: --img_size: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 85: --channel_size: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 86: --patch_size: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 87: --num_flow_blocks: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 88: --flow_block_dim: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 89: --num_attn_layers: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 90: --perumtation_type: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 91: --attn_head_dim: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 92: --ffn_multiplier: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 93: --cfg_weight: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 94: --batch_size: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 95: --epochs: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 96: --lr: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 97: --lr_schedule_type: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 98: --class_dropout_prob: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 99: --sample_freq: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 100: --num_samples: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 101: --sample_batch_size: command not found
+/data/jgu/hozy/min_tarflow/scripts/train/train.sh: line 102: --resume_wandb_url: command not found
+-----------------------------------
+===================================
+Fin at Tue Jun  2 20:44:24 UTC 2026

@@ -1,0 +1,15 @@
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+/data/jgu/hozy/min_tarflow/train.py: line 4: from: command not found
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+/data/jgu/hozy/min_tarflow/train.py: line 8: from: command not found
+/data/jgu/hozy/min_tarflow/train.py: line 9: from: command not found
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+/data/jgu/hozy/min_tarflow/train.py: line 12: from: command not found
+import-im6.q16: unable to open X server `' @ error/import.c/ImportImageCommand/346.
+/data/jgu/hozy/min_tarflow/train.py: line 14: from: command not found
+/data/jgu/hozy/min_tarflow/train.py: line 17: RANDOM_SEED: command not found
+/data/jgu/hozy/min_tarflow/train.py: line 22: syntax error near unexpected token `('
+/data/jgu/hozy/min_tarflow/train.py: line 22: `    parser = argparse.ArgumentParser()'

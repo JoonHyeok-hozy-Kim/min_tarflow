@@ -1,0 +1,12 @@
+__pycache__/
+.vscode/
+.env
+temp/
+venv/
+wandb/
+wandb_logs/
+weights
+data/__pycache__/
+data/imagenet64/__pycache__/
+data/imagenet64/ILSVRC/
+data/imagenet64/fid_stats.pth
