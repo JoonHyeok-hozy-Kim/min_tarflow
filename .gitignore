@@ -3,6 +3,7 @@ __pycache__/
 .env
 logs/
 results/
+scripts/a100_scripts/
 temp/
 venv/
 wandb/
