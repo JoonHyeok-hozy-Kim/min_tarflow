@@ -1,6 +1,8 @@
 __pycache__/
 .vscode/
 .env
+logs/
+results/
 temp/
 venv/
 wandb/
@@ -10,3 +12,5 @@ data/__pycache__/
 data/imagenet64/__pycache__/
 data/imagenet64/ILSVRC/
 data/imagenet64/fid_stats.pth
+
+hozy_ignorance.md
