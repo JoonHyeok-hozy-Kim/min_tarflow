@@ -210,7 +210,8 @@ if __name__ == '__main__':
     
         model.train()
         x = get_2d_dataset(n_points=args.batch_size, dataset_name=args.dataset_name)
-        if (epoch + 1) % args.sample_freq == 0:
+        if epoch == 0:
+        # if (epoch + 1) % args.sample_freq == 0:
             save_2d_dataset_image(x, args.img_size, results_dir, f"training_data-epoch_{epoch+1}")
         
         x = x.to(device)
@@ -235,13 +236,14 @@ if __name__ == '__main__':
             })        
         
         curr_loss = loss.item()
-        # if curr_loss > min_train_loss:
-        #     patience_cnt += 1
-        #     if patience_cnt == tolerance_cnt:
-        #         print(f"Early Termination.")
-        #         break
-        # else:
-        #     patience_cnt = 0
+        if not args.dry_run and curr_loss < min_train_loss:
+            checkpoint = {
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'min_train_loss' : min_train_loss,
+            }
+            torch.save(checkpoint, os.path.join(weights_dir, f"model_best.pth"))            
             
         min_train_loss = min(min_train_loss, curr_loss)
         
@@ -258,8 +260,8 @@ if __name__ == '__main__':
 
             # fid_score = fid.compute().item()
             # fid.reset()
-
-            if not args.dry_run:
+            
+            if (epoch + 1) % (args.sample_freq * 5) == 0:
                 checkpoint = {
                     'epoch': epoch,
                     'model_state_dict': model.state_dict(),
@@ -267,7 +269,7 @@ if __name__ == '__main__':
                     'min_train_loss' : min_train_loss,
                 }
                 torch.save(checkpoint, os.path.join(weights_dir, f"epoch_{epoch+1}-loss_{min_train_loss:.2f}.pth"))
-            
+                
             z = z.cpu()
             save_2d_dataset_image(z, args.img_size, results_dir, f"inference-epoch_{epoch+1}")
         
