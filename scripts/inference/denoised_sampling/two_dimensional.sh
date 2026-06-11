@@ -11,8 +11,8 @@
 #SBATCH --output=/dev/null
 #SBATCH --error=/dev/null
 
-FILE_NAME="two_dimensional.py"
-OUT_DIR="./logs/${FILE_NAME}"
+FILE_DIR="inference/denoised_sampling/two_dimensional.py"
+OUT_DIR="./logs/${FILE_DIR}"
 mkdir -p "${OUT_DIR}"
 
 DATE_WITH_TIME=$(date +%Y%m%d_%H%M%S)
@@ -38,7 +38,7 @@ export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export PYTHONUNBUFFERED=1
 
-echo "${FILE_NAME} starts at $(date)"
+echo "${FILE_DIR} starts at $(date)"
 echo "==================================="
 
 # exprt WANDB_API_KEY and WANDB_ENTITY from .env
@@ -54,6 +54,7 @@ export WANDB_DIR="$(pwd)/wandb_logs"
 echo "==================================="
 
 # Args
+pre_trained_weight_path="weights/train_weights_wip/two_dimensional/spiral/wandb-260610_2104-kepi20v8/lr_schedule_type_wsd/epoch_700-loss_2.99.pth"
 dataset_name=spiral
 img_size=8
 channel_size=1
@@ -77,7 +78,8 @@ annealed_guidance_flag=""
 
 
 
-python -u train/${FILE_NAME} \
+python -u ${FILE_DIR} \
+    --pre_trained_weight_path "$pre_trained_weight_path" \
     --dataset_name "$dataset_name" \
     --img_size "$img_size" \
     --channel_size "$channel_size" \

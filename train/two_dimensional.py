@@ -72,6 +72,7 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(RANDOM_SEED)
     
+    # 2-Dim Unconditional Case
     num_classes = 0          
     num_patches = 2
     
@@ -99,7 +100,7 @@ if __name__ == '__main__':
     # Resume related settings
     start_epoch = 0
     min_train_loss = torch.inf
-    min_valid_loss = torch.inf    
+    # min_valid_loss = torch.inf    
     
     # Directory settings
     base_weights_dir = os.path.join(args.generative_model_path, f"train_weights_wip/{file_name}")    
@@ -121,8 +122,8 @@ if __name__ == '__main__':
                 resume="must",
             )
                 
-            base_weights_dir = os.path.join(base_weights_dir, run_id)
-            base_results_dir = os.path.join(base_results_dir, run_id)
+            base_weights_dir = os.path.join(base_weights_dir, f"wandb-{now_str}-{run_id}")
+            base_results_dir = os.path.join(base_results_dir, f"wandb-{now_str}-{run_id}")
                 
             print(f"Resume training.")
             
@@ -160,9 +161,9 @@ if __name__ == '__main__':
                 resume="allow",
                 config = exp_config_dict,
             )
-            
-            base_weights_dir = os.path.join(base_weights_dir, run_id)
-            base_results_dir = os.path.join(base_results_dir, run_id)
+                
+            base_weights_dir = os.path.join(base_weights_dir, f"wandb-{now_str}-{run_id}")
+            base_results_dir = os.path.join(base_results_dir, f"wandb-{now_str}-{run_id}")
     
     # Directory settings based on wandb run_id
     weights_dir = os.path.join(base_weights_dir, f"lr_schedule_type_{args.lr_schedule_type}")
@@ -173,7 +174,7 @@ if __name__ == '__main__':
     # Training loop settings
     save_weight_freq = args.epochs // 10
     patience_cnt = 0
-    tolerance_cnt = 10
+    tolerance_cnt = 50
     
     fixed_noise = torch.randn(
         args.num_samples,
@@ -201,6 +202,7 @@ if __name__ == '__main__':
     # if args.compile:
     #     compute_loss = torch.compile(compute_loss, fullgraph=False, backend='inductor', mode='max-autotune')
     # print(f"fin.")
+    
     
     for epoch in tqdm(range(start_epoch, start_epoch + args.epochs)):
         curr_lr = get_lr_schedule(epoch, start_epoch + args.epochs, args.lr, args.lr_schedule_type, start_epoch=start_epoch)
@@ -232,7 +234,16 @@ if __name__ == '__main__':
                 "epoch": epoch,
             })        
         
-        min_train_loss = min(min_train_loss, loss.item())
+        curr_loss = loss.item()
+        if curr_loss > min_train_loss:
+            patience_cnt += 1
+            if patience_cnt == tolerance_cnt:
+                print(f"Early Termination.")
+                break
+        else:
+            patience_cnt = 0
+            
+        min_train_loss = min(min_train_loss, curr_loss)
         
         
         # Evaluate performance
@@ -249,10 +260,13 @@ if __name__ == '__main__':
             # fid.reset()
 
             if not args.dry_run:
-                pass
-                # wandb.log({
-                #     "fid": fid_score,
-                # })
+                checkpoint = {
+                    'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'min_train_loss' : min_train_loss,
+                }
+                torch.save(checkpoint, os.path.join(weights_dir, f"epoch_{epoch+1}-loss_{min_train_loss:.2f}.pth"))
             
             z = z.cpu()
             save_2d_dataset_image(z, args.img_size, results_dir, f"inference-epoch_{epoch+1}")
@@ -261,3 +275,19 @@ if __name__ == '__main__':
     if not args.dry_run:
         wandb.finish()
         
+    exit()
+    
+    
+    # Get Denoised Samples
+    for param in model.parameters():
+        param.requires_grad = False
+    
+    noise = fixed_noise.clone().to(device)
+    sample = model.reverse(noise, None, 0.0, args.cfg_weight, args.attn_temp, args.annealed_guidance)
+    x = sample.clone().detach()
+    x.requires_grad = True
+    with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+        loss, (z, outputs, log_dets) = compute_loss(x, None, device, model)
+    grad = torch.autograd.grad(loss, [x])[0]
+    x.data = x.data - args.lr * grad
+    save_2d_dataset_image(x, args.img_size, results_dir, f"denoised_sample")

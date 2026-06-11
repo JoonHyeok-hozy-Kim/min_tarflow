@@ -67,6 +67,7 @@ class FlowBlock(nn.Module):
         ], dim=1)                           # (B, T, c)   [0, x_0, x_1, ..., x_(T-2)]
         
         alpha, mu = x.chunk(2, dim=-1)      # "<i"
+        print(f"    alpha.abs().max() = {alpha.abs().max():.2f}, (x_perm - mu).abs().max() = {(x_perm - mu).abs().max():.2f}")
         scale = torch.exp(-alpha.float()).type(alpha.dtype)
         x = self.permutation((x_perm - mu) * scale, inverse=True)
         return x, -alpha.mean(dim=[1, 2])   # Return mean instead of sum (Normalize by T)
@@ -167,7 +168,9 @@ class TarFlowRaw(nn.Module):
     def forward(self, x, y):
         res = []
         accm_logdet = torch.zeros((), device=x.device)
-        for flow_block in self.flow_blocks:
+        print("Tarflow.forward()")
+        for i, flow_block in enumerate(self.flow_blocks):
+            print(f"  {i}-th FlowBlock.forward()")
             x, log_det = flow_block(x, y)
             res.append(x)
             accm_logdet = accm_logdet + log_det
