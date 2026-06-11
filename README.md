@@ -6,7 +6,7 @@
 <br>
 
 ## Implementation Notice
-- [v] 2-Dimensional Example
+- [x] 2-Dimensional Example
 - [ ] Imagenet Example
 
 <br>
