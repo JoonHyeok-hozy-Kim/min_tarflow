@@ -9,7 +9,7 @@ def get_2d_dataset(n_points, dataset_name):
     if dataset_name == "spiral":
         return get_spiral_dataset(n_points)
 
-def get_spiral_dataset(n_points, noise_std=0.5, turns=4.0):
+def get_spiral_dataset(n_points, noise_std=0.5, turns=2.0):
     t = torch.rand(n_points).sqrt()
     max_theta = turns * 2 * math.pi
     theta = t * max_theta

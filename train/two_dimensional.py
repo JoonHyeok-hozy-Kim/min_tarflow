@@ -235,13 +235,13 @@ if __name__ == '__main__':
             })        
         
         curr_loss = loss.item()
-        if curr_loss > min_train_loss:
-            patience_cnt += 1
-            if patience_cnt == tolerance_cnt:
-                print(f"Early Termination.")
-                break
-        else:
-            patience_cnt = 0
+        # if curr_loss > min_train_loss:
+        #     patience_cnt += 1
+        #     if patience_cnt == tolerance_cnt:
+        #         print(f"Early Termination.")
+        #         break
+        # else:
+        #     patience_cnt = 0
             
         min_train_loss = min(min_train_loss, curr_loss)
         
@@ -276,18 +276,3 @@ if __name__ == '__main__':
         wandb.finish()
         
     exit()
-    
-    
-    # Get Denoised Samples
-    for param in model.parameters():
-        param.requires_grad = False
-    
-    noise = fixed_noise.clone().to(device)
-    sample = model.reverse(noise, None, 0.0, args.cfg_weight, args.attn_temp, args.annealed_guidance)
-    x = sample.clone().detach()
-    x.requires_grad = True
-    with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
-        loss, (z, outputs, log_dets) = compute_loss(x, None, device, model)
-    grad = torch.autograd.grad(loss, [x])[0]
-    x.data = x.data - args.lr * grad
-    save_2d_dataset_image(x, args.img_size, results_dir, f"denoised_sample")
