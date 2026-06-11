@@ -71,6 +71,45 @@ class FlowBlock(nn.Module):
         return x, -alpha.mean(dim=[1, 2])   # Return mean instead of sum (Normalize by T)
     
 
+class TarFlowRaw(nn.Module):
+    def __init__(
+        self,
+        in_channels,
+        flow_block_dim,
+        num_flow_blocks,        
+        num_attn_blocks, 
+        attn_num_heads, 
+        attn_head_dim, 
+        ffn_expansion,
+        num_classes,
+    ):
+        super().__init__()
+        self.permutations = [PermutationIdentity(), PermutationFlip()]
+        self.flow_blocks = nn.ModuleList([
+            FlowBlock(
+                in_channels,
+                flow_block_dim,
+                self.num_patches,
+                self.permutations[i % 2],
+                num_attn_blocks,
+                attn_num_heads,
+                attn_head_dim,
+                ffn_expansion,
+                num_classes,
+            ) for i in range(num_flow_blocks)
+        ])
+        
+        
+    def forward(self, x, y):
+        res = []
+        accm_logdet = torch.zeros((), device=x.device)
+        for flow_block in self.flow_blocks:
+            x, log_det = flow_block(x, y)
+            res.append(x)
+            accm_logdet = accm_logdet + log_det
+        return x, res, accm_logdet
+    
+
 class TarFlow(nn.Module):
     def __init__(
         self,
@@ -128,7 +167,7 @@ class TarFlow(nn.Module):
         
         
     def forward(self, x, y):
-        x = self.patchify(x)
+        x = self.patchify(x)    # (B, T, c)
         res_images = []
         accm_logdet = torch.zeros((), device=x.device)
         for flow_block in self.flow_blocks:
