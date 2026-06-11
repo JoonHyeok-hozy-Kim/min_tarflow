@@ -8,7 +8,7 @@ temp/
 venv/
 wandb/
 wandb_logs/
-weights
+weights/train_weights_wip/
 data/__pycache__/
 data/imagenet64/__pycache__/
 data/imagenet64/ILSVRC/
