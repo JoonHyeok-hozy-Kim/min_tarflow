@@ -11,7 +11,7 @@ import torchvision.utils as tvu
 
 from models.tarflow import TarFlow
 import utils
-from data.dataset import get_data, get_fid_stats_dir
+from data.two_dimensional import get_spiral_dataset
 
 
 RANDOM_SEED = 46
