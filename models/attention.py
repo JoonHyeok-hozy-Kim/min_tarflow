@@ -17,13 +17,13 @@ class Attention(nn.Module):
         self.k_cache = {'cond': [], 'uncond': []}
         self.v_cache = {'cond': [], 'uncond': []}
     
-    def forward(self, x, mask, temperature=1.0, cache_key="cond"):
+    def forward(self, x, mask, temperature, cache_key="cond"):
         B, T, _ = x.size
         x = self.layer_norm(x.float()).type(x.dtype)
         qkv = self.qkv(x).reshape(B, T, 3 * self.num_heads, self.head_dim).transpose(1, 2)  # (B, 3H, T, D)
         q, k, v = qkv.chunk(3, dim=1)   # (B, H, T, D)
         
-        if self.sample:
+        if self.sample and cache_key is not None:
             self.k_cache[cache_key].append(k)
             self.v_cache[cache_key].append(v)
             k = torch.cat(self.k_cache[cache_key], dim=2)
@@ -60,6 +60,6 @@ class Transformer(nn.Module):
         self.feed_forward = FeedForward(in_channels, ffn_expansion)
         
     def forward(self, x, attn_mask, attn_temperature, attn_cache_type):
-        # Residual Connection
+        # Residual Connections
         x = x + self.attention(x, attn_mask, attn_temperature, attn_cache_type)
         x = x + self.mlp(x)
