@@ -54,51 +54,40 @@ export WANDB_DIR="$(pwd)/wandb_logs"
 echo "==================================="
 
 # Args
-pre_trained_weight_path="weights/train_weights_wip/two_dimensional/spiral/wandb-260610_2104-kepi20v8/lr_schedule_type_wsd/epoch_700-loss_2.99.pth"
+WEIGHT="weights/reserved/two_dimensional/spiral/epoch_10000-loss_1.66.pth"
 dataset_name=spiral
 img_size=8
 channel_size=1
 num_flow_blocks=8
 flow_block_dim=8
-num_attn_blocks=8
 permutation_type=flip
+num_attn_blocks=8
 attn_num_heads=8
 attn_head_dim=64
 attn_temp=1.0
 ffn_expansion=4
 cfg_weight=0.0
-batch_size=3000
-epochs=1000
 lr=1e-5
-lr_schedule_type=wsd
-sample_freq=100
 num_samples=3000
-resume_wandb_url=false
 annealed_guidance_flag=""
 
 
-
 python -u ${FILE_DIR} \
-    --pre_trained_weight_path "$pre_trained_weight_path" \
+    --pre_trained_weight_path "$WEIGHT" \
     --dataset_name "$dataset_name" \
     --img_size "$img_size" \
     --channel_size "$channel_size" \
     --num_flow_blocks "$num_flow_blocks" \
     --flow_block_dim "$flow_block_dim" \
-    --num_attn_blocks "$num_attn_blocks" \
     --permutation_type "$permutation_type" \
+    --num_attn_blocks "$num_attn_blocks" \
     --attn_num_heads "$attn_num_heads" \
     --attn_head_dim "$attn_head_dim" \
     --attn_temp "$attn_temp" \
     --ffn_expansion "$ffn_expansion" \
     --cfg_weight "$cfg_weight" \
-    --batch_size "$batch_size" \
-    --epochs "$epochs" \
     --lr "$lr" \
-    --lr_schedule_type "$lr_schedule_type" \
-    --sample_freq "$sample_freq" \
     --num_samples "$num_samples" \
-    --resume_wandb_url "$resume_wandb_url" \
     $annealed_guidance_flag
 
 echo "-----------------------------------"

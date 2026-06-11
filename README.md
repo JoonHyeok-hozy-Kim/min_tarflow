@@ -7,12 +7,24 @@
 
 ## Implementation Notice
 - [x] 2-Dimensional Example
-- [ ] Imagenet Example
+  |Training Data|Inference Result|
+  |:-:|:-:|
+  |![](./assets/training_data-epoch_1.png)|![](./assets/denoised_sample.png)|
+- [ ] Imagenet Example : TBD
+
+<br>
+
+## How to run
+```
+bash scripts/inference/denoised_sampling/two_dimensional.sh
+```
 
 <br>
 
 ## How to train
-
+```
+bash scripts/train/two_dimensional.sh
+```
 
 
 <br>
