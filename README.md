@@ -7,7 +7,7 @@
 
 ## Implementation Notice
 - [v] 2-Dimensional Example
-- [ ] Imagenet Example 
+- [ ] Imagenet Example
 
 <br>
 
