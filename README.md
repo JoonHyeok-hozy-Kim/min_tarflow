@@ -62,6 +62,6 @@ bash scripts/train/two_dimensional.sh
   year = {2026},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/your-username/your-repo-name}},
+  howpublished = {\url{https://github.com/JoonHyeok-hozy-Kim/min_tarflow}},
   }
   ```
